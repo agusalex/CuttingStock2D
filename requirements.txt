@@ -1,0 +1,3 @@
+PySCIPOpt==3.0.4
+matplotlib
+numpy
