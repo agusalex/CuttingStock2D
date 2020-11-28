@@ -1,7 +1,8 @@
 ###Input###
 set posters:={<254,36>,<36,254>}; 
-set anchoMuro := {0..520};
-set altoMuro := {0..240};
+set anchoMuro := {0, 254};
+set altoMuro := {0, 36, 72, 108, 144, 180};
+
 set posibilidades := anchoMuro cross altoMuro cross posters;
 #do print posibilidades;
 
@@ -25,4 +26,7 @@ subto noSobrepasarAncho: forall<i,j,k,m> in posibilidades:
 								
 subto noSobrepasarAlto: forall<i,j,k,m> in posibilidades: 
 								(j+m) * x[i,j,k,m] <= card(altoMuro);
+
+#Tiene que estar esta para limitar la cantidad de posters que pegamos, medio que se contradice con la funcion objetivo pero bueno							
+#subto cantidadPosters: forall<i,j,k,m> in posibilidades: x[i,j,k,m] <= 4;	
 
