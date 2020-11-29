@@ -1,6 +1,8 @@
 
 # Cutting Stock 2D
 
+![alt text](https://github.com/agusalex/TP2CuttingStock2D/blob/main/out.png?raw=true)
+
  - Paquetes requeridos(Si se ejecuta desde python):  
 	 - matplotlib y numpy, el script en la seccion **Python** los instala y todo lo que se necesita para
    ejecutarse 
