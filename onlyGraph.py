@@ -1,4 +1,4 @@
 from lib import *
-rectangles = parseRectangles(filename)
+rectangles = parseRectangles("solution.txt")
 addRectangles(rectangles)
 draw("out.png")
