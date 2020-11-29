@@ -6,10 +6,10 @@ import grapher as Grapher
 import subprocess
 
 #MURO
-ancho_muro = 50
-alto_muro = 50
+ancho_muro = 45
+alto_muro = 45
 #POSTERS
-posters = [(5,5)]
+posters = [(5,5),(10,10)]
 #Minimos
 ancho_min_poster = 5
 alto_min_poster = 5
