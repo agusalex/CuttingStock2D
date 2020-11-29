@@ -1,7 +1,7 @@
 ###Input###
 set posters:={<254,36>,<36,254>}; 
-set anchoMuro := {0, 254};
-set altoMuro := {0, 36, 72, 108, 144, 180};
+set anchoMuro := {read "anchos.txt" as "<1n>"}; #{0, 254};
+set altoMuro := {read "altos.txt" as "<1n>"};
 
 set posibilidades := anchoMuro cross altoMuro cross posters;
 #do print posibilidades;

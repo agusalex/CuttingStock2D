@@ -1,63 +1,74 @@
 import os
+import time
 from shutil import copyfile
-from pyscipopt import Model
 from rectangle import Rectangle
-from grapher import draw
+from grapher import drawRectangles
+import subprocess
+# os.system
+# os.spawn*
 
-#model = Model("CuttingStock")  # model name is optional
-#a = model.addVar("a", vtype="CONTINUOUS")
-#b = model.addVar("b", vtype="CONTINUOUS")
-#o = model.addVar("c", vtype="CONTINUOUS")
-#set anchoMuro := {0..520};
-#set altoMuro := {0..240};
-#posters = [(254,36),(36,254)]
+
 ancho_min = 36
 alto_min = 254
 anchoMuro = 240
 altoMuro = 520
-alto = 240;
-x_pos = []
-y_pos = []
+
+
+def valuesToZPLList(pos):
+    tostr = ""
+    for value in pos:
+        tostr = tostr + str(value) + "\n"
+    return tostr[0:len(tostr)-1]
+
+
+def writeFile(filename, content):
+    f = open(filename, "w")
+    f.write(valuesToZPLList(content))
+    f.close()
+
+
+def calculateSteps(step, maxSize):
+    w_steps = []
+    w = 0
+    while(w+step < maxSize):
+        w_steps.append(w)
+        w = w + step
+    return w_steps
+
+
+def parseRectangles(filename):
+    rectangles = []
+    with open(filename+".tbl") as fp:
+        line = fp.readline()
+        cnt = 1
+        end = False
+        while line and not end:
+            line = fp.readline()
+            if(line.find('v') != -1):
+                cut = line[line.find('"'):len(line)]
+                cut = cut.replace('"', '')
+                recstr = cut.split('#')
+                rectangles.append(
+                    Rectangle(int(recstr[1]), int(recstr[2]), int(recstr[3]), int(recstr[4])))
+
+            else:
+                end = True
+    return rectangles
+
 
 print("\n###############################################")
 print("Posibilidades:")
-x = 0
-while(x+ancho_min < anchoMuro):
-    x_pos.append(x)
-    x = x + ancho_min
-y = 0
-while(y+alto_min < altoMuro):
-    y_pos.append(y)
-    y = y + alto_min
-
-print(x_pos)    
+x_pos = calculateSteps(ancho_min, anchoMuro)
+y_pos = calculateSteps(alto_min, altoMuro)
+print(x_pos)
 print(y_pos)
-
+writeFile("altos.txt", y_pos)
+writeFile("anchos.txt", x_pos)
 print("###############################################")
-
-
-
-
-
-
-#model.readProblem("cuttingStock.zpl")
-#model.optimize()
-#Busco solucion e imprimo puntos
-#print("a: {}".format(sol[a]))
-#print("b: {}".format(sol[b]))
-#print("o: {}".format(sol[o]))
-
-#model.setObjective(o,"maximize")
-
-#model.addCons(4>=a*2 + b + o)
-#model.addCons(5>=a*3 + b + o)
-#model.addCons(1<=a*3 + b - o)
-
-
-#model.addCons(-a -b -c - o>= -2)
-#model.addCons(-16*a -4*b -c - o>= -2)
-#model.addCons(-4*a -2*b -c +o <= -2)
-#model.addCons(-9*a -3*b -c +o <= -2)
-
-#
-#model.readProblem("ejemplo.zpl")
+print("Solving Problem")
+filename = 'solution'
+correct = subprocess.run(
+    ['zimpl', '-v', '0', '-o', filename, '-t', 'mps', 'cuttingStock2d.zpl'])
+rectangles = parseRectangles(filename)
+print(rectangles)
+drawRectangles(rectangles)
