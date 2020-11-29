@@ -21,11 +21,11 @@ subto noSuperposicion: forall<i,j,v,w> in posibilidades:
 										 end 
 									end;
 									
-subto noSobrepasarAncho: forall<i,j,k,m> in posibilidades: 
-								(i+k) * x[i,j,k,m] <= card(anchoMuro);
+#subto noSobrepasarAncho: forall<i,j,k,m> in posibilidades: 
+#								(i+k) * x[i,j,k,m] <= card(anchoMuro);
 								
-subto noSobrepasarAlto: forall<i,j,k,m> in posibilidades: 
-								(j+m) * x[i,j,k,m] <= card(altoMuro);
+#subto noSobrepasarAlto: forall<i,j,k,m> in posibilidades: 
+#								(j+m) * x[i,j,k,m] <= card(altoMuro);
 
 #Tiene que estar esta para limitar la cantidad de posters que pegamos, medio que se contradice con la funcion objetivo pero bueno							
 #subto cantidadPosters: forall<i,j,k,m> in posibilidades: x[i,j,k,m] <= 4;	
