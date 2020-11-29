@@ -19,6 +19,17 @@ def getCantPerCutHandV(cant,cuts):
         cut = cuts[i*2]
         tuplcant.append((cant[i],cut[0]*cut[1]))
     return tuplcant
+    
+def getPosicionesFactibles(posiciones, maximo, coordenada):
+    posicionesFactibles = []
+    for pos in posiciones:
+        if coordenada == 'ancho':
+            if pos[0] < maximo:
+                posicionesFactibles.append(pos[0])
+        else:
+            if pos[1] < maximo:
+                posicionesFactibles.append(pos[1])
+    return posicionesFactibles
 
 def valuesToZPLList(pos):
     tostr = ""
@@ -45,7 +56,7 @@ def calculateSteps(step, maxSize, posibility):
     w = 0
     while(w < maxSize):
         for value in posibility:
-            if(w%value== 0 or w%value== 0):
+            if(w%value== 0):
                 w_steps.append(w)  
                 break
         w = w + 1
