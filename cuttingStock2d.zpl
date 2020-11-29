@@ -1,5 +1,5 @@
 ###Input###
-set posters:={<254,36>,<36,254>}; 
+set posters:={read "posters.txt" as "<1n,2n>"};
 set anchoMuro := {read "anchos.txt" as "<1n>"}; #{0, 254};
 set altoMuro := {read "altos.txt" as "<1n>"};
 

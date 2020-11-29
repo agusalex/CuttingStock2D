@@ -5,11 +5,16 @@ from rectangle import Rectangle
 import grapher as Grapher
 import subprocess
 
+#MURO
+ancho_muro = 240
+alto_muro = 520
+#POSTERS
+posters = [(254,36),(36,254)]
+#Minimos
+ancho_min_poster = 36
+alto_min_poster = 36
 
-ancho_min = 36
-alto_min = 254
-anchoMuro = 240
-altoMuro = 520
+
 
 
 def valuesToZPLList(pos):
@@ -18,17 +23,22 @@ def valuesToZPLList(pos):
         tostr = tostr + str(value) + "\n"
     return tostr[0:len(tostr)-1]
 
+def valuesToZPLTuple(pos):
+    tostr = ""
+    for value in pos:
+        tostr = tostr + str(value[0]) + ";" +str(value[1])+ "\n"
+    return tostr[0:len(tostr)-1]
 
 def writeFile(filename, content):
     f = open(filename, "w")
-    f.write(valuesToZPLList(content))
+    f.write(content)
     f.close()
 
 
 def calculateSteps(step, maxSize):
     w_steps = []
     w = 0
-    while(w+step < maxSize):
+    while(w+step <= maxSize):
         w_steps.append(w)
         w = w + step
     return w_steps
@@ -36,41 +46,40 @@ def calculateSteps(step, maxSize):
 
 def parseRectangles(filename):
     rectangles = []
-    with open(filename+".tbl") as fp:
+    print("parsing")
+    with open(filename) as fp:
+        line = fp.readline()
+        line = fp.readline()
         line = fp.readline()
         cnt = 1
         end = False
         while line and not end:
             line = fp.readline()
-            if(line.find('v') != -1):
-                cut = line[line.find('"'):len(line)]
-                cut = cut.replace('"', '')
-                recstr = cut.split('#')
+            if(len(line)>1):
+                recstr = line.split('#')      
                 rectangles.append(
-                    Rectangle(int(recstr[1]), int(recstr[2]), int(recstr[3]), int(recstr[4])))
-
-            else:
-                end = True
+                    Rectangle(int(recstr[1]), int(recstr[2]), int(recstr[3]), int(recstr[4].split(' ')[0])))
     return rectangles
 
 
 print("\n###############################################")
 print("Posibilidades:")
-x_pos = calculateSteps(ancho_min, anchoMuro)
-y_pos = calculateSteps(alto_min, altoMuro)
+x_pos = calculateSteps(ancho_min_poster, ancho_muro)
+y_pos = calculateSteps(alto_min_poster, alto_muro)
 print(x_pos)
 for x in x_pos:
     Grapher.addVline(x)
 for y in y_pos:
     Grapher.addHline(y)
 print(y_pos)
-writeFile("altos.txt", y_pos)
-writeFile("anchos.txt", x_pos)
+writeFile("posters.txt", valuesToZPLTuple(posters))
+writeFile("altos.txt", valuesToZPLList(y_pos))
+writeFile("anchos.txt", valuesToZPLList(x_pos))
 print("###############################################")
 print("Solving Problem")
-filename = 'solution'
+filename = 'solution.sol'
 correct = subprocess.run(
-    ['zimpl', '-v', '0', '-o', filename, '-t', 'mps', 'cuttingStock2d.zpl'])
+    ['scip','-c','read cuttingStock2d.zpl','-c','set display verblevel 3' ,'-c', 'optimize',  '-c', 'write solution {}'.format(filename),'-c','quit'])
 rectangles = parseRectangles(filename)
 print(rectangles)
 Grapher.addRectangles(rectangles)

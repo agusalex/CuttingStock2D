@@ -1,6 +1,2 @@
-# cantidad tipo A
-4
-# cantidad tipo B
-8
-# cantidad tipo C
-9
+254;36
+36;254
