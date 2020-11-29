@@ -2,10 +2,8 @@ import os
 import time
 from shutil import copyfile
 from rectangle import Rectangle
-from grapher import drawRectangles
+import grapher as Grapher
 import subprocess
-# os.system
-# os.spawn*
 
 
 ancho_min = 36
@@ -61,6 +59,10 @@ print("Posibilidades:")
 x_pos = calculateSteps(ancho_min, anchoMuro)
 y_pos = calculateSteps(alto_min, altoMuro)
 print(x_pos)
+for x in x_pos:
+    Grapher.addVline(x)
+for y in y_pos:
+    Grapher.addHline(y)
 print(y_pos)
 writeFile("altos.txt", y_pos)
 writeFile("anchos.txt", x_pos)
@@ -71,4 +73,5 @@ correct = subprocess.run(
     ['zimpl', '-v', '0', '-o', filename, '-t', 'mps', 'cuttingStock2d.zpl'])
 rectangles = parseRectangles(filename)
 print(rectangles)
-drawRectangles(rectangles)
+Grapher.addRectangles(rectangles)
+Grapher.draw("out.png")
