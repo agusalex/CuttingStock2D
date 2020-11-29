@@ -40,12 +40,16 @@ def writeFile(filename, content):
     f.close()
 
 
-def calculateSteps(step, maxSize):
+def calculateSteps(step, maxSize, posibility):
     w_steps = []
     w = 0
-    while(w+step < maxSize):
-        w_steps.append(w)
-        w = w + step
+    while(w < maxSize):
+        for value in posibility:
+            if(w%value== 0 or w%value== 0):
+                w_steps.append(w)  
+                break
+        w = w + 1
+    w_steps.append(w)
     return w_steps
 
 
