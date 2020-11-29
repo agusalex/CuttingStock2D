@@ -7,12 +7,12 @@ import numpy as np
 from lib import *
 
 
-#MURO
+# MURO
 ancho_muro = 47
 alto_muro = 47
-#POSTERS
-posters = [(7,5),(10,12)]
-#Minimos
+# POSTERS
+posters = [(7, 5), (10, 12)]
+# Minimos
 minimos = findMinimun(posters)
 ancho_min_poster = minimos[0]
 alto_min_poster = minimos[1]
@@ -39,7 +39,7 @@ print("###############################################")
 print("Solving Problem")
 filename = 'solution.sol'
 correct = subprocess.run(
-    ['scip','-c','read cuttingStock2d.zpl','-c','set display verblevel 3' ,'-c', 'optimize',  '-c', 'write solution {}'.format(filename),'-c','quit'])
+    ['scip', '-c', 'read cuttingStock2d.zpl', '-c', 'set display verblevel 3', '-c', 'optimize',  '-c', 'write solution {}'.format(filename), '-c', 'quit'])
 rectangles = parseRectangles(filename)
 addRectangles(rectangles)
 draw("out.png")
