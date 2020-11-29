@@ -13,6 +13,12 @@ def findMinimun(posters):
         alto.append(tup[1])
     return (min(ancho), min(alto))
 
+def getCantPerCutHandV(cant,cuts):
+    tuplcant = []
+    for i in range(int(len(cuts)/2)):
+        cut = cuts[i*2]
+        tuplcant.append((cant[i],cut[0]*cut[1]))
+    return tuplcant
 
 def valuesToZPLList(pos):
     tostr = ""
@@ -84,17 +90,16 @@ def draw(filename):
 
 
 def addRectangles(drawlist):
-  #  matplotlib.use( 'tkagg' )
     for item in drawlist:
         create_rectangle(item)
 
 
-def addHline(y):
-    plt.axhline(y=y, alpha=0.1, color='tab:orange')
+def addHline(y,alpha = 0.1, color ='tab:orange'):
+    plt.axhline(y=y, alpha=alpha, color=color)
 
 
-def addVline(x):
-    plt.axvline(x=x, alpha=0.1, color='tab:orange')
+def addVline(x,alpha = 0.1, color ='tab:orange'):
+    plt.axvline(x=x, alpha=alpha, color=color)
 
 
 # plt.imsave('demo')

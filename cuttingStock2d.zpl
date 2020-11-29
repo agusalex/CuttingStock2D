@@ -2,9 +2,11 @@
 set posters:={read "posters.txt" as "<1n,2n>"};
 set anchoMuro := {read "anchos.txt" as "<1n>"}; #{0, 254};
 set altoMuro := {read "altos.txt" as "<1n>"};
-
+set cantidades := {read "cantidades.txt" as "<1n>"};
 set posibilidades := anchoMuro cross altoMuro cross posters;
-#do print posibilidades;
+param maxAlto := read "maxAlto.txt" as "1n" use 1;
+param maxAncho := read "maxAncho.txt" as "1n" use 1;
+
 
 ###Variables###
 var x[<i,j,k,m> in posibilidades] binary;
@@ -21,12 +23,12 @@ subto noSuperposicion: forall<i,j,v,w> in posibilidades:
 										 end 
 									end;
 									
-#subto noSobrepasarAncho: forall<i,j,k,m> in posibilidades: 
-#								(i+k) * x[i,j,k,m] <= card(anchoMuro);
+subto noSobrepasarAncho: forall<i,j,k,m> in posibilidades: 
+								(i+k) * x[i,j,k,m] <= maxAncho;
 								
-#subto noSobrepasarAlto: forall<i,j,k,m> in posibilidades: 
-#								(j+m) * x[i,j,k,m] <= card(altoMuro);
+subto noSobrepasarAlto: forall<i,j,k,m> in posibilidades: 
+								(j+m) * x[i,j,k,m] <= maxAlto;
 
 #Tiene que estar esta para limitar la cantidad de posters que pegamos, medio que se contradice con la funcion objetivo pero bueno							
-#subto cantidadPosters: forall<i,j,k,m> in posibilidades: x[i,j,k,m] <= 4;	
+#subto cantidadPosters: forall<i,j,k,m> in posibilidades: cantidades[k*m*x[i,j,k,m]] >= 4;	
 
