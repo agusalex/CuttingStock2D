@@ -7,5 +7,6 @@ cantidades = [4,8,9]
 cantidadesXPoster = getCantPerCutHandV(cantidades,posters) #(cantidad,ancho*alto)
 # Minimos
 minimos = findMinimun(posters)
-ancho_min_poster = minimos[0]/2 #minimo ancho
-alto_min_poster = minimos[1]/2 #minimo alto
+presicion = 1 # cuanto mas alto mas dificil de resolver
+ancho_min_poster = minimos[0]//presicion #minimo ancho
+alto_min_poster = minimos[1]//presicion #minimo alto

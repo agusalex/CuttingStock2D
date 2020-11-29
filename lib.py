@@ -15,7 +15,7 @@ def findMinimun(posters):
 
 def getCantPerCutHandV(cant,cuts):
     tuplcant = []
-    for i in range(int(len(cuts)/2)):
+    for i in range(len(cuts)//2):
         cut = cuts[i*2]
         tuplcant.append((cant[i],cut[0]*cut[1]))
     return tuplcant
