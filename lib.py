@@ -54,7 +54,6 @@ def parseRectangles(filename):
     with open(filename) as fp:
         line = fp.readline()
         line = fp.readline()
-        line = fp.readline()
         cnt = 1
         end = False
         print("\n###############################################")
