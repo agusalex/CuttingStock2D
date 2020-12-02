@@ -7,12 +7,12 @@ set posibilidades := anchoMuro cross altoMuro cross posters;
 param maxAlto := read "maxAlto.txt" as "1n" use 1;
 param maxAncho := read "maxAncho.txt" as "1n" use 1;
 
-
+#do print posibilidades;
 ###Variables###
 var x[<i,j,k,m> in posibilidades] binary;
 
 ###Funcion Objetivo###
-maximize segmentosInsertados: sum<i,j,k,m> in posibilidades : x[i,j,k,m] * (k) * (m);
+maximize postersInsertados: sum<i,j,k,m> in posibilidades : x[i,j,k,m] * (k) * (m);
 
 ###Restricciones###								
 subto noSuperposicion: forall<i,j,v,w> in posibilidades: 
@@ -28,7 +28,4 @@ subto noSobrepasarAncho: forall<i,j,k,m> in posibilidades:
 								
 subto noSobrepasarAlto: forall<i,j,k,m> in posibilidades: 
 								(j+m) * x[i,j,k,m] <= maxAlto;
-
-#Tiene que estar esta para limitar la cantidad de posters que pegamos, medio que se contradice con la funcion objetivo pero bueno							
-#subto cantidadPosters: forall<i,j,k,m> in posibilidades: cantidades[k*m*x[i,j,k,m]] >= 4;	
 
