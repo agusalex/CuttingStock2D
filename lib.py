@@ -51,7 +51,7 @@ def writeFile(filename, content):
     f.close()
 
 
-def calculateSteps(step, maxSize, posibility):
+def calculateSteps(maxSize, posibility):
     w_steps = []
     w = 0
     while(w < maxSize):
