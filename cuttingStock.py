@@ -16,8 +16,6 @@ print(x_pos)
 print(y_pos)
 print("Posters:")
 print(posters)
-print("Minimos:")
-print(minimos)
 for x in x_pos:
     addVline(x)
 for y in y_pos:
