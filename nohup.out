@@ -1,0 +1,32 @@
+SCIP version 7.0.1 [precision: 8 byte] [memory: block] [mode: optimized] [LP solver: SoPlex 5.0.1] [GitHash: b41d526acf]
+Copyright (C) 2002-2020 Konrad-Zuse-Zentrum fuer Informationstechnik Berlin (ZIB)
+
+External codes: 
+  SoPlex 5.0.1         Linear Programming Solver developed at Zuse Institute Berlin (soplex.zib.de) [GitHash: fcd2a2a5]
+  CppAD 20180000.0     Algorithmic Differentiation of C++ algorithms developed by B. Bell (www.coin-or.org/CppAD)
+  ZLIB 1.2.11          General purpose compression library by J. Gailly and M. Adler (zlib.net)
+  GMP 6.1.2            GNU Multiple Precision Arithmetic Library developed by T. Granlund (gmplib.org)
+  ZIMPL 3.4.0          Zuse Institute Mathematical Programming Language developed by T. Koch (zimpl.zib.de)
+  PaPILO 1.0.1         parallel presolve for integer and linear optimization (https://github.com/lgottwald/PaPILO) [GitHash: 0638fc4]
+  bliss 0.73p          Computing Graph Automorphism Groups by T. Junttila and P. Kaski (http://www.tcs.hut.fi/Software/bliss/)
+  Ipopt 3.13.2         Interior Point Optimizer developed by A. Waechter et.al. (www.coin-or.org/Ipopt)
+
+user parameter file <scip.set> not found - using default parameters
+
+
+read problem <cuttingStock2d.zpl>
+============
+
+
+base directory for ZIMPL parsing: </home/agus/CuttingStock2D>
+
+original problem has 3650 variables (3650 bin, 0 int, 0 impl, 0 cont) and 2012390 constraints
+display/verblevel = 3
+
+presolving (5 rounds: 5 fast, 4 medium, 3 exhaustive):
+ 58 deleted vars, 2033488 deleted constraints, 1006256 added constraints, 0 tightened bounds, 0 added holes, 0 changed sides, 0 changed coefficients
+ 0 implications, 985097 cliques
+presolved problem has 3592 variables (3592 bin, 0 int, 0 impl, 0 cont) and 985158 constraints
+
+ time | node  | left  |LP iter|LP it/n|mem/heur|mdpt |vars |cons |rows |cuts |sepa|confs|strbr|  dualbound   | primalbound  |  gap   | compl. 
+p59.9s|     1 |     0 |     0 |     - |  clique|   0 |3592 | 985k| 985k|   0 |  0 |   0 |   0 | 1.413334e+07 | 7.568000e+04 |  Large | unknown

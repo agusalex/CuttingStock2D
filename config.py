@@ -1,6 +1,6 @@
 from lib import findMinimun,getCantPerCutHandV,getXorYPosters
-ancho_muro = 200
-alto_muro = 200
+ancho_muro = 240
+alto_muro = 520
 # POSTERS agregar siempre vertical y horizontal, siempre numero par
 posters = [(254,36),(36,254),(104,55),(55,104),(40,30),(30,40)]
 #cantidades = [20,20]
