@@ -19,17 +19,18 @@ def getCantPerCutHandV(cant,cuts):
         cut = cuts[i*2]
         tuplcant.append((cant[i],cut[0]*cut[1]))
     return tuplcant
-    
-def getPosicionesFactibles(posiciones, maximo, coordenada):
-    posicionesFactibles = []
-    for pos in posiciones:
+
+
+def getXorYPosters(posters, maximo, coordenada):
+    posicionesPosters = []
+    for pos in posters:
         if coordenada == 'ancho':
             if pos[0] < maximo:
-                posicionesFactibles.append(pos[0])
+                posicionesPosters.append(pos[0])
         else:
             if pos[1] < maximo:
-                posicionesFactibles.append(pos[1])
-    return posicionesFactibles
+                posicionesPosters.append(pos[1])
+    return posicionesPosters
 
 def valuesToZPLList(pos):
     tostr = ""
@@ -50,19 +51,20 @@ def writeFile(filename, content):
     f.write(content)
     f.close()
 
+def findMultiples(start,max): 
+    multiples = set()
+    temp = start 
+    while(temp<=max-start):
+        multiples.add(temp)
+        temp = temp+start
+    return multiples
 
-def calculateSteps(maxSize, posibility):
-    w_steps = []
-    w = 0
-    while(w < maxSize):
-        for value in posibility:
-            if(w%value== 0):
-                w_steps.append(w)  
-                break
-        w = w + 1
-    w_steps.append(w)
+def calculateSteps(maxSize, posterSizes):
+    w_steps : set = set()
+    for poster in posterSizes:
+        w_steps = w_steps | set(findMultiples(poster,maxSize))
+    w_steps.add(0)
     return w_steps
-
 
 def parseRectangles(filename):
     rectangles = []
