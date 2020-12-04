@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from rectangle import Rectangle
 import random
+import itertools
 
 
 def findMinimun(posters):
@@ -45,6 +46,11 @@ def valuesToZPLTuple(pos):
         tostr = tostr + str(value[0]) + ";" + str(value[1]) + "\n"
     return tostr[0:len(tostr)-1]
 
+def rectanglesToZPLQuad(rectangles):
+    tostr = ""
+    for value in rectangles:
+        tostr = tostr + str(value.x) + ";" + str(value.y) + ";" + str(value.width) + ";" + str(value.height) + "\n"
+    return tostr[0:len(tostr)-1]
 
 def writeFile(filename, content):
     f = open(filename, "w")
@@ -59,12 +65,27 @@ def findMultiples(start,max):
         temp = temp+start
     return multiples
 
+def filterOutOfRange(rectangles,max_height,max_width):
+    rects = []
+    for rectangle in rectangles:
+        if(rectangle.x+rectangle.width<=max_width):
+            if(rectangle.y+rectangle.height<=max_height):
+                rects.append(rectangle)
+    return rects
+
 def calculateSteps(maxSize, posterSizes):
     w_steps : set = set()
     for poster in posterSizes:
         w_steps = w_steps | set(findMultiples(poster,maxSize))
     w_steps.add(0)
     return w_steps
+
+def generatePossibleRectangles(x,y,posters):
+    rectangles = []
+    for quad in set(itertools.product(x, y , posters)):
+        rectangles.append(Rectangle(quad[0],quad[1],quad[2][0],quad[2][1]))
+    return rectangles
+
 
 def parseRectangles(filename):
     rectangles = []
@@ -101,7 +122,8 @@ def add_shape(patch):
     plt.axis('scaled')
 
 
-def draw(filename):
+def draw(filename,metadata):
+    plt.text(0,0 , metadata, fontsize=12)
     plt.savefig(filename)
 
 
@@ -110,11 +132,11 @@ def addRectangles(drawlist):
         create_rectangle(item)
 
 
-def addHline(y,alpha = 0.1, color ='tab:orange'):
+def addHline(y,alpha = 0.2, color ='tab:orange'):
     plt.axhline(y=y, alpha=alpha, color=color)
 
 
-def addVline(x,alpha = 0.1, color ='tab:orange'):
+def addVline(x,alpha = 0.2, color ='tab:orange'):
     plt.axvline(x=x, alpha=alpha, color=color)
 
 
