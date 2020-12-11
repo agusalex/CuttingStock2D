@@ -51,6 +51,15 @@ def rectanglesToZPLQuad(rectangles):
     for value in rectangles:
         tostr = tostr + str(value.x) + ";" + str(value.y) + ";" + str(value.width) + ";" + str(value.height) + "\n"
     return tostr[0:len(tostr)-1]
+    
+def posterToTxt(posters):
+    tostr = ""
+    for value in posters:
+        posterVariaton1 = str(value[0]) + ";"+ str(value[1])
+        posterVariaton2 = str(value[1]) + ";"+ str(value[0])
+        if(tostr.find(posterVariaton1) == -1 and tostr.find(posterVariaton2) == -1 ):
+            tostr = tostr + str(value[0]) + ";"+ str(value[1]) +"\n"
+    return tostr[0:len(tostr)-1]
 
 def writeFile(filename, content):
     f = open(filename, "w")
