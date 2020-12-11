@@ -1,12 +1,6 @@
 ###Input###
 set posibilidades := {read "rects.txt" as "<1n,2n,3n,4n>"};
-param cantA := read "cantidadPosterA.txt" as "1n" use 1;
-param cantB := read "cantidadPosterB.txt" as "1n" use 1;
-param cantC := read "cantidadPosterC.txt" as "1n" use 1;
-
-set posterA := {read "poster.txt" as "<1n,2n>" use 1};
-set posterB := {read "poster.txt" as "<1n,2n>" skip 1 use 1};
-set posterC := {read "poster.txt" as "<1n,2n>" skip 2 use 1};
+set posters_cant := {read "posters_cant.txt" as "<1n,2n,3n>"};
 
 #do print posibilidades;
 ###Variables###
@@ -24,8 +18,4 @@ subto noSuperposicion: forall<i,j,v,w> in posibilidades:
 										 end 
 									end;
 									
-subto cantidadPostersA: forall<w,h> in posterA: sum<i,j,k,m> in posibilidades with((k == w and m == h) or (k == h and m == w)): x[i,j,k,m] == cantA;
-							
-subto cantidadPostersB: forall<w,h> in posterB: sum<i,j,k,m> in posibilidades with((k == w and m == h) or (k == h and m == w)): x[i,j,k,m] == cantB;
-							
-subto cantidadPostersC: forall<w,h> in posterC: sum<i,j,k,m> in posibilidades with((k == w and m == h) or (k == h and m == w)): x[i,j,k,m] == cantC;			
+subto cantidad: forall<w,h,u> in posters_cant: sum<i,j,k,m> in posibilidades with((k == w and m == h) or (k == h and m == w)): x[i,j,k,m] <= u;		

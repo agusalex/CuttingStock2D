@@ -1,14 +1,9 @@
-from lib import findMinimun,getCantPerCutHandV,getXorYPosters
+from lib import getXorYPosters,extractPosters
 ancho_muro = 240
 alto_muro = 520
-# POSTERS agregar siempre vertical y horizontal, siempre numero par
-posters = [(254,36),(36,254),(104,55),(55,104),(40,30),(30,40)]
-#Cantidad de posters
-cantPostersA = 4
-cantPostersB = 8
-cantPostersC = 9
-#cantidades = [20,20]
-#cantidadesXPoster = getCantPerCutHandV(cantidades,posters) #(cantidad,ancho*alto)
-#Posibles anchos y altos de posters que entran en el muro
+# POSTERS agregar vertical y horizontal. Ancho, alto, cantidad
+posters_cant = [((254,36),4),((36,254),4),((104,55),8),((55,104),8),((40,30),9),((30,40),9)]
+posters = extractPosters(posters_cant)
+
 anchos_posters = getXorYPosters(posters,ancho_muro,'ancho')
 altos_posters = getXorYPosters(posters,alto_muro,'alto')

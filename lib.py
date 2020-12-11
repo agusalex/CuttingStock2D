@@ -5,23 +5,6 @@ from rectangle import Rectangle
 import random
 import itertools
 
-
-def findMinimun(posters):
-    ancho = []
-    alto = []
-    for tup in posters:
-        ancho.append(tup[0])
-        alto.append(tup[1])
-    return (min(ancho), min(alto))
-
-def getCantPerCutHandV(cant,cuts):
-    tuplcant = []
-    for i in range(len(cuts)//2):
-        cut = cuts[i*2]
-        tuplcant.append((cant[i],cut[0]*cut[1]))
-    return tuplcant
-
-
 def getXorYPosters(posters, maximo, coordenada):
     posicionesPosters = []
     for pos in posters:
@@ -40,9 +23,9 @@ def valuesToZPLList(pos):
     return tostr[0:len(tostr)-1]
 
 
-def valuesToZPLTuple(pos):
+def valuesToZPLTuple(posters):
     tostr = ""
-    for value in pos:
+    for value in posters:
         tostr = tostr + str(value[0]) + ";" + str(value[1]) + "\n"
     return tostr[0:len(tostr)-1]
 
@@ -51,14 +34,21 @@ def rectanglesToZPLQuad(rectangles):
     for value in rectangles:
         tostr = tostr + str(value.x) + ";" + str(value.y) + ";" + str(value.width) + ";" + str(value.height) + "\n"
     return tostr[0:len(tostr)-1]
+
+def extractPosters(posters_cant):
+    posters = []
+    for tuple in posters_cant:
+        posters.append(tuple[0])
+    return posters
+
     
-def posterToTxt(posters):
+def valuesToZPLTupleWithoutReps(posters):
     tostr = ""
     for value in posters:
-        posterVariaton1 = str(value[0]) + ";"+ str(value[1])
-        posterVariaton2 = str(value[1]) + ";"+ str(value[0])
+        posterVariaton1 = str(value[0][0]) + ";"+ str(value[0][1])
+        posterVariaton2 = str(value[0][1]) + ";"+ str(value[0][0])
         if(tostr.find(posterVariaton1) == -1 and tostr.find(posterVariaton2) == -1 ):
-            tostr = tostr + str(value[0]) + ";"+ str(value[1]) +"\n"
+            tostr = tostr + str(value[0][0]) + ";"+ str(value[0][1]) + ";"+ str(value[1]) +"\n"
     return tostr[0:len(tostr)-1]
 
 def writeFile(filename, content):
@@ -87,7 +77,10 @@ def calculateSteps(maxSize, posterSizes):
     for poster in posterSizes:
         w_steps = w_steps | set(findMultiples(poster,maxSize))
     w_steps.add(0)
-    return w_steps
+    w_steps_list = list(w_steps)
+    w_steps_list.sort()
+    print(w_steps_list)
+    return w_steps_list
 
 def generatePossibleRectangles(x,y,posters):
     rectangles = []
