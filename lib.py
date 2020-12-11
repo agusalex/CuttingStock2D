@@ -72,6 +72,16 @@ def filterOutOfRange(rectangles,max_height,max_width):
                 rects.append(rectangle)
     return rects
 
+def drawGuidingLines(x_pos, y_pos, width_max,height_max):
+    for x in x_pos:
+        addVline(x)
+    for y in y_pos:
+        addHline(y)
+    addVline(width_max,alpha=1,color = 'tab:red')
+    addHline(height_max,alpha=1,color = 'tab:red')
+    addVline(0,alpha=1,color = 'tab:red')
+    addHline(0,alpha=1,color = 'tab:red')
+
 def calculateSteps(maxSize, posterSizes):
     w_steps : set = set()
     for poster in posterSizes:
@@ -79,7 +89,6 @@ def calculateSteps(maxSize, posterSizes):
     w_steps.add(0)
     w_steps_list = list(w_steps)
     w_steps_list.sort()
-    print(w_steps_list)
     return w_steps_list
 
 def generatePossibleRectangles(x,y,posters):
