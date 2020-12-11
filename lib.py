@@ -132,6 +132,21 @@ def create_rectangle(rectangle: Rectangle):
                         rectangle.height, color=color, zorder=1, alpha=0.25)
     add_shape(rec)
 
+def parsePostersInput(input):
+    parsed_1 = input.replace(' ','').split(',')
+    parsed = []
+    for triple in parsed_1:
+        splitted = triple.split('#')
+        if(len(splitted)==1):
+            parsed.append(int(splitted[0]))
+            break
+        tuple = splitted[0].split(';')
+        cant = splitted[1]
+        width = tuple[0]
+        height = tuple[1]
+        parsed.append(((int(width),int(height)),int(cant)))
+
+    return parsed
 
 def add_shape(patch):
     ax = plt.gca()

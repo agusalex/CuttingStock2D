@@ -39,9 +39,10 @@ if(path.exists("solution.sol")):
     print("###############################################")
     print("Tiempo de calculo del modelo: %s " % tiempo)
     print("Graph written in out.png")
-    os.rename("solution.sol","solution.last")
+    os.remove("solution.sol")
     print("Solution written to solution.last")
     draw("out.png",tiempo)
+    writeFile("solution.last", rectanglesToZPLQuad(rectangles))
 else:
     print("NO SOLUTION")
     if(path.exists("solution.last")):
