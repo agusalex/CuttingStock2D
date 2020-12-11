@@ -41,6 +41,12 @@ def extractPosters(posters_cant):
         posters.append(tuple[0])
     return posters
 
+def filterNonFittingPosters(non_filtered,max_width,max_height):
+    filtered = []
+    for tuple in non_filtered:
+        if ((tuple[0][0]<=max_width) and (tuple[0][1] <= max_height)):
+            filtered.append(tuple)
+    return filtered
     
 def valuesToZPLTupleWithoutReps(posters):
     tostr = ""

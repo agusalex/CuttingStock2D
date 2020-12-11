@@ -7,7 +7,7 @@ set posters_cant := {read "posters_cant.txt" as "<1n,2n,3n>"};
 var x[<i,j,k,m> in posibilidades] binary;
 
 ###Funcion Objetivo###
-maximize postersInsertados: sum<i,j,k,m> in posibilidades : x[i,j,k,m] * (k) * (m);
+maximize espacioCubierto: sum<i,j,k,m> in posibilidades : x[i,j,k,m] * (k) * (m);
 
 ###Restricciones###								
 subto noSuperposicion: forall<i,j,v,w> in posibilidades: 
