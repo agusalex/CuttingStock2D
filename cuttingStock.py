@@ -28,23 +28,23 @@ def solve(i,posters_with_amount,ancho_muro,alto_muro,costo_muro):
     writeFile("rects.txt", rectanglesToZPLQuad(rectangles))
     print("###############################################")
     start_time = time.time()
-    solveScip("cuttingStock2d.zpl","solution"+ str(i) +".sol",verbose)
-    if(path.exists("solution"+ str(i) +".sol")):
+    solveScip("cuttingStock2d.zpl","out/solution"+ str(i) +".sol",verbose)
+    if(path.exists("out/solution"+ str(i) +".sol")):
         end_time = time.time()
         tiempo = str(datetime.timedelta(seconds=(end_time-start_time)))
-        rectangles = parseRectangles("solution"+ str(i) +".sol")
+        rectangles = parseRectangles("out/solution"+ str(i) +".sol")
         startPlot()
         drawGuidingLines(x_pos,y_pos,ancho_muro,alto_muro)
         addRectangles(rectangles)
         print("###############################################")
         print("Model Solving Time: %s " % tiempo)
-        os.remove("solution"+ str(i) +".sol")
+        os.remove("out/solution"+ str(i) +".sol")
         print("###############################################")
         area = calculateArea(rectangles)
         score = area/costo_muro
-        draw("muro_"+ str(i) +".png","T: "+ tiempo+" - Area: "+str(area)+"- Cost: "+str(costo_muro)+" - Score: "+str(int(score)))
-        writeFile("muro_"+ str(i) +".sol", rectanglesToZPLQuad(rectangles))
-        writeFile("solution.last", rectanglesToZPLQuad(rectangles))
+        draw("out/muro_"+ str(i) +".png","T: "+ tiempo+" - Area: "+str(area)+"- Cost: "+str(costo_muro)+" - Score: "+str(int(score)))
+        writeFile("out/muro_"+ str(i) +".sol", rectanglesToZPLQuad(rectangles))
+        writeFile("out/solution.last", rectanglesToZPLQuad(rectangles))
         print("Solution written to muro_"+ str(i) +".sol")
         print("Graph written to muro_"+ str(i) +".sol")
         print("##############################################################################################")
@@ -52,8 +52,8 @@ def solve(i,posters_with_amount,ancho_muro,alto_muro,costo_muro):
         return (score,updatePosterCount(rectangles, posters_with_amount_filtered))
     else:
         print("NO SOLUTION")
-        if(path.exists("solution.last")):
-            os.remove("solution.last")
+        if(path.exists("out/solution.last")):
+            os.remove("out/solution.last")
         return []
 
 
