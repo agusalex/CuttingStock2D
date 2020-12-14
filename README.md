@@ -1,7 +1,7 @@
 
 # Cutting Stock 2D
 
-![alt text](https://github.com/agusalex/CuttingStock2D/blob/main/out/WhatsApp%20Image%202020-12-11%20at%208.24.56%20PM.jpeg?raw=true)
+![alt text](https://github.com/agusalex/CuttingStock2D/blob/main/out/demo.jpeg?raw=true)
 
  - Paquetes requeridos(Si se ejecuta desde python):  
 	 - matplotlib y numpy, el script en la seccion **Python** los instala y todo lo que se necesita para
