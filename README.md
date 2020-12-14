@@ -18,7 +18,7 @@ Descargar https://www.scipopt.org/download.php?fname=SCIPOptSuite-7.0.1-Linux.de
     source venv/bin/activate
     python3 -m pip install --upgrade pip
     pip install -r requirements.txt
-    bash run.sh "36;254#4, 254;36#4 104;55#8, 55;104#8, 40;30#9, 30;40#9" "520,286" "240,240" "100,70"
+    bash run.sh "36;254#4, 254;36#4, 104;55#8, 55;104#8, 40;30#9, 30;40#9" "520,286" "240,240" "100,70"
     
 
 

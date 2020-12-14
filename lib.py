@@ -5,6 +5,8 @@ from rectangle import Rectangle
 import random
 import itertools
 import subprocess
+from PIL import Image
+
 
 def solveScip(model,output,verbose = False):
 
@@ -206,5 +208,20 @@ def addHline(y,alpha = 0.2, color ='tab:orange'):
 def addVline(x,alpha = 0.2, color ='tab:orange'):
     plt.axvline(x=x, alpha=alpha, color=color)
 
+def combineImagesToPDF(images:list,filename):
+    raw = []
+    for image in images:
+        raw.append(Image.open(image))
+    rgb = []
+    for image in raw:
+        rgb.append(image.convert('RGB'))
+    rgb[0].save(filename,save_all=True, append_images=rgb[1:len(raw)])
+
+def combineSolutionsToTxt(solutions:list,filename):
+    final = "#Amount: "+str(len(solutions))+"\n########################\n"
+    for sol in solutions:
+        with open(sol) as fp: 
+            final +=fp.read()
+    writeFile(filename,final)
 
 # plt.imsave('demo')

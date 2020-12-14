@@ -42,23 +42,17 @@ def solve(i,posters_with_amount,ancho_muro,alto_muro,costo_muro):
         print("###############################################")
         area = calculateArea(rectangles)
         score = area/costo_muro
-        draw("out/muro_"+ str(i) +".png","T: "+ tiempo+" - Area: "+str(area)
-        +" - Cost: "+str(costo_muro)+" - Score: "+str(int(score))+ " - Inserted: "+str(len(rectangles)))
-        writeFile("out/muro_"+ str(i) +".sol", rectanglesToZPLQuad(rectangles))
-        writeFile("out/solution.last", rectanglesToZPLQuad(rectangles))
+        metadata = "#Type: "+str(ancho_muro)+"X"+str(alto_muro)+" - T: "+ tiempo+"\n#Area: "+str(area) + " - Cost: "+str(costo_muro)+" - Score: "+str(int(score))+ " - Inserted: "+str(len(rectangles))
+        draw("out/muro_"+ str(i) +".png",metadata)
+        writeFile("out/muro_"+ str(i) +".sol", metadata +"\n"+ rectanglesToZPLQuad(rectangles)+"\n")
         print("Solution written to muro_"+ str(i) +".sol")
-        print("Graph written to muro_"+ str(i) +".sol")
+        print("Graph written to muro_"+ str(i) +".png")
         print("##############################################################################################")
         # Costo beneficio del muro y posters que faltan por colocar si se elije ese muro
         return (score,updatePosterCount(rectangles, posters_with_amount_filtered))
     else:
         print("NO SOLUTION")
-        if(path.exists("out/solution.last")):
-            os.remove("out/solution.last")
-        return []
-
-
-
+        return ()
 
 print("Cutting Stock 2D")
 print("\n###############################################")
@@ -85,4 +79,13 @@ total_time = time.time() - total_start_time
 print("##############################################################################################")
 print("Total Time: %s " % total_time)
 print("Solution Path: %s " % solution_path)
+text = []
+pngs = []
+for index in solution_path:
+    pngs.append("out/muro_"+index+".png")
+    text.append("out/muro_"+index+".sol")
+
+combineImagesToPDF(pngs,"out/final.pdf")
+combineSolutionsToTxt(text,"out/final.txt")
+
 
