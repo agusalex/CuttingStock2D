@@ -42,7 +42,8 @@ def solve(i,posters_with_amount,ancho_muro,alto_muro,costo_muro):
         print("###############################################")
         area = calculateArea(rectangles)
         score = area/costo_muro
-        draw("out/muro_"+ str(i) +".png","T: "+ tiempo+" - Area: "+str(area)+"- Cost: "+str(costo_muro)+" - Score: "+str(int(score)))
+        draw("out/muro_"+ str(i) +".png","T: "+ tiempo+" - Area: "+str(area)
+        +" - Cost: "+str(costo_muro)+" - Score: "+str(int(score))+ " - Inserted: "+str(len(rectangles)))
         writeFile("out/muro_"+ str(i) +".sol", rectanglesToZPLQuad(rectangles))
         writeFile("out/solution.last", rectanglesToZPLQuad(rectangles))
         print("Solution written to muro_"+ str(i) +".sol")

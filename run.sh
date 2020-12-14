@@ -1,6 +1,7 @@
 #!/bin/bash
 source venv/bin/activate
-rm -f solution.last
+rm -rf out
+mkdir out
 export POSTERS=$1
 export ANCHO=$2
 export ALTO=$3

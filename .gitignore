@@ -131,7 +131,4 @@ dmypy.json
 *.mps
 *.tbl
 *.txt
-*.sol
-*.out
-*.last
-*.png
+out/

@@ -1,0 +1,173 @@
+SCIP version 7.0.1 [precision: 8 byte] [memory: block] [mode: optimized] [LP solver: SoPlex 5.0.1] [GitHash: b41d526acf]
+Copyright (C) 2002-2020 Konrad-Zuse-Zentrum fuer Informationstechnik Berlin (ZIB)
+
+External codes: 
+  SoPlex 5.0.1         Linear Programming Solver developed at Zuse Institute Berlin (soplex.zib.de) [GitHash: fcd2a2a5]
+  CppAD 20180000.0     Algorithmic Differentiation of C++ algorithms developed by B. Bell (www.coin-or.org/CppAD)
+  ZLIB 1.2.11          General purpose compression library by J. Gailly and M. Adler (zlib.net)
+  GMP 6.1.2            GNU Multiple Precision Arithmetic Library developed by T. Granlund (gmplib.org)
+  ZIMPL 3.4.0          Zuse Institute Mathematical Programming Language developed by T. Koch (zimpl.zib.de)
+  PaPILO 1.0.1         parallel presolve for integer and linear optimization (https://github.com/lgottwald/PaPILO) [GitHash: 0638fc4]
+  bliss 0.73p          Computing Graph Automorphism Groups by T. Junttila and P. Kaski (http://www.tcs.hut.fi/Software/bliss/)
+  Ipopt 3.13.2         Interior Point Optimizer developed by A. Waechter et.al. (www.coin-or.org/Ipopt)
+
+user parameter file <scip.set> not found - using default parameters
+
+
+read problem <cuttingStock2d.zpl>
+============
+
+
+base directory for ZIMPL parsing: </home/agus/CuttingStock2D>
+
+original problem has 2815 variables (2815 bin, 0 int, 0 impl, 0 cont) and 1189942 constraints
+display/verblevel = 3
+
+presolving (5 rounds: 5 fast, 4 medium, 3 exhaustive):
+ 33 deleted vars, 1196818 deleted constraints, 595004 added constraints, 0 tightened bounds, 0 added holes, 0 changed sides, 0 changed coefficients
+ 0 implications, 588095 cliques
+presolved problem has 2782 variables (2782 bin, 0 int, 0 impl, 0 cont) and 588128 constraints
+
+ time | node  | left  |LP iter|LP it/n|mem/heur|mdpt |vars |cons |rows |cuts |sepa|confs|strbr|  dualbound   | primalbound  |  gap   | compl. 
+p28.6s|     1 |     0 |     0 |     - |  clique|   0 |2782 | 588k| 588k|   0 |  0 |   0 |   0 | 1.101724e+07 | 8.520800e+04 |  Large | unknown
+p49.5s|     1 |     0 |   546 |     - | vbounds|   0 |2782 | 588k| 588k|   0 |  0 |   0 |   0 | 1.101724e+07 | 9.598400e+04 |  Large | unknown
+r6889s|     1 |     0 | 44324 |     - |simplero|   0 |2782 | 588k| 588k|1325 | 94 |   0 |   0 | 1.248000e+05 | 1.092000e+05 |  14.29%| unknown
+r6889s|     1 |     0 | 44324 |     - |randroun|   0 |2782 | 588k| 588k|   0 | 94 |   0 |   0 | 1.248000e+05 | 1.188000e+05 |   5.05%| unknown
+i6889s|     1 |     0 | 44342 |     - |  oneopt|   0 |2782 | 577k| 588k|1325 | 96 |   0 |   0 | 1.248000e+05 | 1.236000e+05 |   0.97%| unknown
+d6889s|     1 |     0 | 44342 |     - |farkasdi|   0 |2782 | 577k| 588k|   0 | 98 |   0 |   0 | 1.248000e+05 | 1.248000e+05 |   0.00%| unknown
+ 6889s|     1 |     0 | 44342 |     - |  3778M |   0 |2782 | 577k| 588k|1325 | 98 |   0 |   0 | 1.248000e+05 | 1.248000e+05 |   0.00%| unknown
+
+SCIP Status        : problem is solved [optimal solution found]
+Solving Time (sec) : 6889.41
+Solving Nodes      : 1
+Primal Bound       : +1.24800000000000e+05 (102 solutions)
+Dual Bound         : +1.24800000000000e+05
+Gap                : 0.00 %
+
+
+written solution information to file <solution.sol>
+
+
+Cutting Stock 2D
+
+###############################################
+Posters:
+[(36, 254), (104, 55), (55, 104), (40, 30), (30, 40)]
+Positions:
+[0, 30, 36, 40, 55, 60, 72, 80, 90, 104, 108, 110, 120, 144, 150, 160, 165, 180, 200, 210]
+[0, 30, 40, 55, 60, 80, 90, 104, 110, 120, 150, 160, 165, 180, 200, 208, 210, 220, 240, 254, 270, 275, 280, 300, 312, 320, 330, 360, 385, 390, 400, 416, 420, 440, 450, 480]
+###############################################
+Writing Input Files
+###############################################
+Solving Problem
+
+###############################################
+Solution:
+210, 80, 30, 40
+210, 280, 30, 40
+210, 40, 30, 40
+210, 120, 30, 40
+210, 160, 30, 40
+210, 200, 30, 40
+210, 360, 30, 40
+210, 400, 30, 40
+210, 240, 30, 40
+210, 0, 30, 40
+210, 320, 30, 40
+210, 480, 30, 40
+210, 440, 30, 40
+120, 80, 30, 40
+120, 40, 30, 40
+120, 0, 30, 40
+120, 480, 30, 40
+30, 80, 30, 40
+30, 40, 30, 40
+30, 0, 30, 40
+30, 480, 30, 40
+110, 180, 40, 30
+110, 450, 40, 30
+110, 120, 40, 30
+110, 420, 40, 30
+110, 150, 40, 30
+110, 210, 40, 30
+110, 300, 40, 30
+110, 360, 40, 30
+110, 330, 40, 30
+110, 270, 40, 30
+110, 240, 40, 30
+110, 390, 40, 30
+80, 280, 30, 40
+80, 120, 30, 40
+80, 160, 30, 40
+80, 200, 30, 40
+80, 360, 30, 40
+80, 400, 30, 40
+80, 240, 30, 40
+80, 320, 30, 40
+80, 440, 30, 40
+90, 80, 30, 40
+90, 40, 30, 40
+90, 0, 30, 40
+90, 480, 30, 40
+40, 180, 40, 30
+40, 450, 40, 30
+40, 120, 40, 30
+40, 420, 40, 30
+40, 150, 40, 30
+40, 210, 40, 30
+40, 300, 40, 30
+40, 360, 40, 30
+40, 330, 40, 30
+40, 270, 40, 30
+40, 240, 40, 30
+40, 390, 40, 30
+60, 80, 30, 40
+60, 40, 30, 40
+60, 0, 30, 40
+60, 480, 30, 40
+0, 80, 30, 40
+0, 180, 40, 30
+0, 40, 30, 40
+0, 450, 40, 30
+0, 120, 40, 30
+0, 420, 40, 30
+0, 150, 40, 30
+0, 210, 40, 30
+0, 300, 40, 30
+0, 360, 40, 30
+0, 330, 40, 30
+0, 270, 40, 30
+0, 240, 40, 30
+0, 390, 40, 30
+0, 0, 30, 40
+0, 480, 30, 40
+180, 80, 30, 40
+180, 280, 30, 40
+180, 40, 30, 40
+180, 120, 30, 40
+180, 160, 30, 40
+180, 200, 30, 40
+180, 360, 30, 40
+180, 400, 30, 40
+180, 240, 30, 40
+180, 0, 30, 40
+180, 320, 30, 40
+180, 480, 30, 40
+180, 440, 30, 40
+150, 80, 30, 40
+150, 280, 30, 40
+150, 40, 30, 40
+150, 120, 30, 40
+150, 160, 30, 40
+150, 200, 30, 40
+150, 360, 30, 40
+150, 400, 30, 40
+150, 240, 30, 40
+150, 0, 30, 40
+150, 320, 30, 40
+150, 480, 30, 40
+150, 440, 30, 40
+###############################################
+Tiempo de calculo del modelo: 1:55:17.866077 
+Graph written in out.png
+Solution written to solution.last
