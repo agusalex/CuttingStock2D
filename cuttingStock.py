@@ -59,8 +59,9 @@ print("\n###############################################")
 print("###############################################")
 
 i = 0
+if not os.path.exists('out'):
+    os.makedirs('out')
 total_start_time = time.time()
-
 #solution = solve(0,raw_posters_with_amount,anchos_muro[0],altos_muro[0])
 solution = raw_posters_with_amount
 solution_path = []
