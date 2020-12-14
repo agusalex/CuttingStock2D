@@ -15,3 +15,11 @@ class Rectangle:
 
     def __repr__(self):
         return "".join(["Rectangle(", str(self.x), ",", str(self.y), "," , str(self.width), "," , str(self.height) ,")"])
+
+    def __hash__(self):
+        return hash(self.height, self.width, self.x, self.y)
+    def __eq__(self, other): 
+        if not isinstance(other, Rectangle):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+        return self.height == other.height and self.width == other.width and self.x == other.x and self.y == other.y

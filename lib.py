@@ -103,7 +103,24 @@ def generatePossibleRectangles(x,y,posters):
         rectangles.append(Rectangle(quad[0],quad[1],quad[2][0],quad[2][1]))
     return rectangles
 
+def hasHowManyOfThisRectangle(rectangles,width,height):
+    amount = 0
+    for rect in rectangles:
+        if((rect.width == width and rect.height == height) or (rect.width == height and rect.height == width )):
+            amount +=1
+    return amount
 
+def updatePosterCount(rectangles:list,posters_cant:list):
+    new = []
+    for poster in posters_cant:
+        amountFound = hasHowManyOfThisRectangle(rectangles,poster[0][0],poster[0][1])
+        new_poster = ((poster[0][0],poster[0][1]),(poster[1] - amountFound))
+        print("Found "+ str(amountFound)+" of type " + str(poster[0]))
+        if(new_poster[1]>0):
+            new.append(new_poster)
+    return new
+
+        
 def parseRectangles(filename):
     rectangles = []
     with open(filename) as fp:
@@ -153,10 +170,13 @@ def add_shape(patch):
     ax.add_patch(patch)
     plt.axis('scaled')
 
+def startPlot():
+    plt.figure()
 
 def draw(filename,metadata):
     plt.text(0,0 , metadata, fontsize=12)
     plt.savefig(filename)
+    plt.close
 
 
 def addRectangles(drawlist):
