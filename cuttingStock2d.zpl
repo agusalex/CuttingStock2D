@@ -1,3 +1,4 @@
+
 ###Input###
 set posibilidades := {read "rects.txt" as "<1n,2n,3n,4n>"};
 set posters_cant := {read "posters_cant.txt" as "<1n,2n,3n>"};

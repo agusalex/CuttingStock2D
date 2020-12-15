@@ -5,20 +5,19 @@ from rectangle import Rectangle
 import random
 import itertools
 import subprocess
+import time
 from PIL import Image
 
 
-def solveScip(model,output,verbose = False):
-
+def solveScip(model,folder,output,verbose = False):
     if(not verbose):
         print("Solving Problem....(Enable Verbose Mode to see SCIP output)")
         subprocess.check_call(
-            ['scip', '-c', 'read {}'.format(model), '-c', 'set display verblevel 3', '-c', 'optimize',  '-c', 'write solution {}'.format(output), '-c', 'quit'], stdout=subprocess.DEVNULL)
+            ['scip', '-c', 'read {}'.format(model), '-c', 'set display verblevel 3', '-c', 'optimize',  '-c', 'write solution {}'.format(output), '-c', 'quit'], stdout=subprocess.DEVNULL, cwd=folder)
     else:
         print("Solving Problem....")
         subprocess.check_call(
-            ['scip', '-c', 'read {}'.format(model), '-c', 'set display verblevel 3', '-c', 'optimize',  '-c', 'write solution {}'.format(output), '-c', 'quit'])
-
+            ['scip', '-c', 'read {}'.format(model), '-c', 'set display verblevel 3', '-c', 'optimize',  '-c', 'write solution {}'.format(output), '-c', 'quit'], cwd=folder)
 def extractWidthAndHeight(rectangles, max_width, max_height):
     postersWidth = []
     postersHeight = []
@@ -148,6 +147,11 @@ def parseRectanglesPlainTextInput(input):
 
     return parsed        
 
+def readFile(filename):
+    with open(filename, 'r+') as f:
+        return f.read()
+
+
 def parseRectangles(filename):
     rectangles = []
     with open(filename) as fp:
@@ -176,10 +180,11 @@ def create_rectangle(rectangle: Rectangle):
 def add_shape(patch):
     ax = plt.gca()
     ax.add_patch(patch)
+    ax.set_title(time.time())
     plt.axis('scaled')
 
 def startPlot():
-    plt.figure()
+    plt.figure(str(time.time()))
 
 def draw(filename,metadata):
     plt.title(metadata)
@@ -206,7 +211,7 @@ def addHline(y,alpha = 0.2, color ='tab:orange'):
 
 
 def addVline(x,alpha = 0.2, color ='tab:orange'):
-    plt.axvline(x=x, alpha=alpha, color=color)
+    plt.axvline(x=x,label= 5, alpha=alpha, color=color)
 
 def combineImagesToPDF(images:list,filename):
     raw = []
