@@ -72,7 +72,7 @@ def solve( i,posters_with_amount,ancho_muro,alto_muro,costo_muro):
 def solve_threaded(walls):
     with ProcessPoolExecutor(max_workers=max_threads) as executor:
         futures = []
-        m = multiprocessing.Manager()
+        #m = multiprocessing.Manager()
         #lock = m.Lock()
         for k in range(len(walls)):
             futures.append(executor.submit(solve, i = str(i)+"-"+str(k),
