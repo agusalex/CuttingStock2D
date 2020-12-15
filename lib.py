@@ -2,11 +2,96 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 from rectangle import Rectangle
+from shutil import copyfile,rmtree
 import random
 import itertools
 import subprocess
 import time
+import os
+from os import path
+from config import *
+import time,datetime
 from PIL import Image
+import concurrent.futures
+from concurrent.futures import ProcessPoolExecutor
+
+
+def solve(index,id,posters_with_amount,ancho_muro,alto_muro,costo_muro,verbose):
+
+    posters_with_amount_filtered = filterNonFittingRectangles(posters_with_amount,ancho_muro,alto_muro)
+    posters = extractPosters(posters_with_amount_filtered)
+    anchos_altos_tuple = extractWidthAndHeight(posters, ancho_muro, alto_muro)
+    anchos_posters = anchos_altos_tuple[0]
+    altos_posters = anchos_altos_tuple[1]
+    print("Posters:")
+    print(posters_with_amount_filtered)
+    print("Positions:")
+    x_pos = calculateSteps( ancho_muro, anchos_posters)
+    y_pos = calculateSteps( alto_muro, altos_posters)
+    print(x_pos)
+    print(y_pos)
+    rectangles = filterOutOfRange(generatePossibleRectangles(x_pos,y_pos,posters),alto_muro,ancho_muro)
+    print("###############################################")
+    print("Writing Input Files")
+    if not os.path.exists('out/{}'.format(id)):
+        os.makedirs('out/{}'.format(id))
+    else:
+        rmtree('out/{}'.format(id))
+        os.makedirs('out/{}'.format(id))
+    writeFile("out/{}/posters_cant.txt".format(id), valuesToZPLTupleWithoutReps(posters_with_amount_filtered))
+    writeFile("out/{}/rects.txt".format(id), rectanglesToZPLQuad(rectangles))
+    print("###############################################")
+    start_time = time.time()
+
+    writeFile("out/{}/cuttingStock2d.zpl".format(id),readFile("cuttingStock2d.zpl"))
+    solveScip("cuttingStock2d.zpl","out/{}".format(id),"solution"+ str(id) +".sol",verbose)
+
+ 
+    end_time = time.time()
+    if(path.exists("out/{}/solution".format(id)+ str(id) +".sol")):
+        tiempo = str(datetime.timedelta(seconds=(end_time-start_time)))
+        rectangles = parseRectangles("out/{}/solution".format(id)+ str(id) +".sol")
+        startPlot()
+        drawGuidingLines(x_pos,y_pos,ancho_muro,alto_muro)
+        addRectangles(rectangles)
+        print("###############################################")
+        print("Model Solving Time: %s " % tiempo)
+        print("###############################################")
+        area = calculateArea(rectangles)
+        score = area/costo_muro
+        metadata = "#Type: "+str(ancho_muro)+"X"+str(alto_muro)+" - T: "+ tiempo+"\n#Area: "+str(area) + " - Cost: "+str(costo_muro)+" - Score: "+str(int(score))+ " - Inserted: "+str(len(rectangles))
+        draw("out/{}/muro_".format(id)+ str(id) +".png",metadata)
+        writeFile("out/{}/muro_".format(id)+ str(id) +".sol", metadata +"\n"+ rectanglesToZPLQuad(rectangles)+"\n")
+        print("##############################################################################################")
+        # Costo beneficio del muro y posters que faltan por colocar si se elije ese muro
+        return (index,score,updatePosterCount(rectangles, posters_with_amount_filtered))
+    else:
+        print("NO SOLUTION")
+        return ()
+
+
+
+def solve_threaded(i,posters_with_amount,walls,verbose):
+    with ProcessPoolExecutor(max_workers=max_threads) as executor:
+        futures = []
+        #m = multiprocessing.Manager()
+        #lock = m.Lock()
+        for k in range(len(walls)):
+            futures.append(executor.submit(solve, index = k, id = str(i)+"-"+str(k),
+            posters_with_amount = posters_with_amount, ancho_muro=anchos_muro[k],
+             alto_muro=altos_muro[k],costo_muro=costos_muro[k],verbose=verbose))
+        result = []
+        
+        for future in concurrent.futures.as_completed(futures):
+            try:
+                data = future.result()
+                result.append(data)
+            except Exception as exc:
+                print('%r generated an exception: %s' % (exc))
+        return result
+
+
+
 
 
 def solveScip(model,folder,output,verbose = False):
@@ -58,12 +143,7 @@ def calculateArea(rectangles:list):
         area = area + (rect.width * rect.height)
     return area
 
-def filterNonFittingRectangles(non_filtered,max_width,max_height):
-    filtered = []
-    for tuple in non_filtered:
-        if ((tuple[0][0]<=max_width) and (tuple[0][1] <= max_height)):
-            filtered.append(tuple)
-    return filtered
+
     
 def valuesToZPLTupleWithoutReps(posters):
     tostr = ""
@@ -134,18 +214,7 @@ def parseListPlainTextInput(input):
         parsed.append(int(item))
     return parsed       
 
-def parseRectanglesPlainTextInput(input):
-    parsed_1 = input.replace(' ','').split(',')
-    parsed = []
-    for triple in parsed_1:
-        splitted = triple.split('#')
-        tuple = splitted[0].split(';')
-        cant = splitted[1]
-        width = tuple[0]
-        height = tuple[1]
-        parsed.append(((int(width),int(height)),int(cant)))
-
-    return parsed        
+    
 
 def readFile(filename):
     with open(filename, 'r+') as f:
