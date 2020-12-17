@@ -27,8 +27,8 @@ def parseListPlainTextInput(input):
         parsed.append(int(item))
     return parsed          
 
-anchos_muro = parseListPlainTextInput(os.getenv("ANCHO","240,240"))
-altos_muro = parseListPlainTextInput(os.getenv("ALTO","520,286"))
+anchos_muro = parseListPlainTextInput(os.getenv("ANCHO","520,286"))
+altos_muro = parseListPlainTextInput(os.getenv("ALTO","240,240"))
 verbose = False
 threaded = True
 max_threads = 2
