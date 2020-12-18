@@ -291,8 +291,8 @@ def combineImagesToPDF(images:list,filename):
         rgb.append(image.convert('RGB'))
     rgb[0].save(filename,save_all=True, append_images=rgb[1:len(raw)])
 
-def combineSolutionsToTxt(solutions:list,filename):
-    final = "#Amount: "+str(len(solutions))+"\n########################\n"
+def combineSolutionsToTxt(solutions:list,metadata,filename):
+    final = metadata+"\n########################\n"
     for sol in solutions:
         with open(sol) as fp: 
             final +=fp.read()

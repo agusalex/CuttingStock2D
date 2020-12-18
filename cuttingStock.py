@@ -24,27 +24,21 @@ total_start_time = time.time()
 solution = raw_posters_with_amount
 solution_path = []
 start = True
-if(threaded):
-    print("Running async on "+str(max_threads)+" threads")
+print("Running on "+str(max_threads)+" threads")
 print("###############################################")
 while (len(solution)>0 or start):
     start = False
     temp = []
-    if(threaded):
-        solutions_j = solve_threaded(i,solution,anchos_muro,verbose)
-        for j in range(len(solutions_j)):
-            solution_j = solutions_j[j]
-            temp.append((solution_j[1],solution_j[2],solution_j[0])) #(score,restantes,indice)
-    else:
-        for j in range(len(anchos_muro)): # resuelvo con cada tipo de muro
-            solution_j = solve(j,str(i)+"-"+str(j),solution,anchos_muro[j],altos_muro[j],costos_muro[j],verbose) 
-            temp.append(solution_j[1],solution_j[2],solution_j[0]) #(score,restantes,indice)
+    solutions_j = solve_threaded(i,solution,anchos_muro,verbose)
+    for j in range(len(solutions_j)):
+        solution_j = solutions_j[j]
+        temp.append((solution_j[1],solution_j[2],solution_j[0])) #(score,restantes,indice)
     temp.sort(key=lambda tup: int(tup[0]), reverse=True)  # ordeno por costo/beneficio
     solution = temp[0][1] # Elijo el muro mejor performante, me quedo con sus posters restantes
     solution_path.append(str(i)+"-"+str(temp[0][2])) #Me guardo cual fue el elegido
     i+=1
-total_time = time.time() - total_start_time
 print("##############################################################################################")
+total_time = str(datetime.timedelta(seconds=(time.time() - total_start_time)))
 print("Total Time: %s " % total_time)
 print("Solution Path: %s " % solution_path)
 text = []
@@ -54,6 +48,6 @@ for index in solution_path:
     text.append("out/{}/muro_".format(index)+index+".sol")
 
 combineImagesToPDF(pngs,"out/final.pdf")
-combineSolutionsToTxt(text,"out/final.txt")
+combineSolutionsToTxt(text,"#Amount: {}\n#Solution Path: {}\n#Total Time: {} ".format(str(len(text)),solution_path, total_time),"out/final.txt")
 
 
